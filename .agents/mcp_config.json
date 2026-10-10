@@ -6,6 +6,9 @@
         "-y",
         "@magicuidesign/mcp@latest"
       ]
+    },
+    "orshot": {
+      "serverUrl": "https://mcp.orshot.com/mcp"
     }
   }
 }
