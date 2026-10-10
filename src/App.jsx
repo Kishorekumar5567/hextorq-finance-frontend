@@ -29,6 +29,7 @@ import TransactionModal from "./components/TransactionModal";
 import Toast from "./components/Toast";
 import AmbientBackground from "./components/AmbientBackground";
 import { StatCardSkeleton, TableRowSkeleton } from "./components/Skeletons";
+import { motion } from "motion/react";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
@@ -351,7 +352,12 @@ function App() {
       <AmbientBackground />
 
       {/* Top Application Header */}
-      <header className="sticky top-0 z-30 border-b border-slate-200/80 bg-white/85 backdrop-blur-md">
+      <motion.header
+        initial={{ opacity: 0, y: -16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+        className="sticky top-0 z-30 border-b border-slate-200/80 bg-white/85 backdrop-blur-md"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between gap-4">
           {/* Logo & Brand Identity */}
           <div className="flex items-center gap-3.5">
@@ -419,7 +425,8 @@ function App() {
             </div>
 
             {/* Export CSV Button */}
-            <button
+            <motion.button
+              whileTap={{ scale: 0.96 }}
               type="button"
               onClick={exportToCSV}
               className="flex items-center gap-2 px-3.5 py-2 rounded-xl border border-slate-200 bg-white text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition cursor-pointer shadow-xs active:scale-95"
@@ -427,10 +434,11 @@ function App() {
             >
               <Download className="w-3.5 h-3.5" />
               Export CSV
-            </button>
+            </motion.button>
 
             {/* Refresh */}
-            <button
+            <motion.button
+              whileTap={{ scale: 0.94 }}
               type="button"
               onClick={getalldata}
               disabled={loading}
@@ -438,20 +446,22 @@ function App() {
               title="Refresh ledger"
             >
               <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />
-            </button>
+            </motion.button>
 
             {/* Record Transaction Button */}
-            <button
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.96 }}
               type="button"
               onClick={handleadd}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold shadow-sm shadow-slate-900/10 transition active:scale-95 cursor-pointer"
+              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold shadow-sm shadow-slate-900/10 transition cursor-pointer"
             >
               <Plus className="w-4 h-4" />
               New Transaction
-            </button>
+            </motion.button>
           </div>
         </div>
-      </header>
+      </motion.header>
 
       {/* Main Content Area */}
       <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
@@ -467,133 +477,170 @@ function App() {
           ) : (
             <>
               {/* Gross Revenue */}
-              <MagicCard>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                    Gross Revenue
-                  </span>
-                  <div className="p-2 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-100">
-                    <ArrowUpRight className="w-4 h-4" />
-                  </div>
-                </div>
-                <div className="mt-4">
-                  <p className="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight font-mono-numbers">
-                    {currencySymbol}
-                    {(metrics.totalCredit * currencyMultiplier).toLocaleString(undefined, {
-                      maximumFractionDigits: 2,
-                    })}
-                  </p>
-                  <div className="flex items-center gap-2 mt-2">
-                    <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-100">
-                      Total Inflow
+              <motion.div
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ y: -3, transition: { duration: 0.2 } }}
+              >
+                <MagicCard>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                      Gross Revenue
                     </span>
-                    <span className="text-[11px] text-slate-500 font-medium">
-                      {adata.filter((d) => d.type?.toLowerCase() === "credit").length} payments
-                    </span>
+                    <div className="p-2 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-100">
+                      <ArrowUpRight className="w-4 h-4" />
+                    </div>
                   </div>
-                </div>
-              </MagicCard>
+                  <div className="mt-4">
+                    <p className="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight font-mono-numbers">
+                      {currencySymbol}
+                      {(metrics.totalCredit * currencyMultiplier).toLocaleString(undefined, {
+                        maximumFractionDigits: 2,
+                      })}
+                    </p>
+                    <div className="flex items-center gap-2 mt-2">
+                      <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-100">
+                        Total Inflow
+                      </span>
+                      <span className="text-[11px] text-slate-500 font-medium">
+                        {adata.filter((d) => d.type?.toLowerCase() === "credit").length} payments
+                      </span>
+                    </div>
+                  </div>
+                </MagicCard>
+              </motion.div>
 
               {/* Operating Cost */}
-              <MagicCard>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                    Operating Cost
-                  </span>
-                  <div className="p-2 rounded-xl bg-rose-50 text-rose-700 border border-rose-100">
-                    <ArrowDownRight className="w-4 h-4" />
-                  </div>
-                </div>
-                <div className="mt-4">
-                  <p className="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight font-mono-numbers">
-                    {currencySymbol}
-                    {(metrics.totalDebit * currencyMultiplier).toLocaleString(undefined, {
-                      maximumFractionDigits: 2,
-                    })}
-                  </p>
-                  <div className="flex items-center gap-2 mt-2">
-                    <span className="text-[11px] font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded-md border border-rose-100">
-                      Burn Rate
+              <motion.div
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ y: -3, transition: { duration: 0.2 } }}
+              >
+                <MagicCard>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                      Operating Cost
                     </span>
-                    <span className="text-[11px] text-slate-500 font-medium">
-                      {adata.filter((d) => d.type?.toLowerCase() === "debit").length} expenses
-                    </span>
+                    <div className="p-2 rounded-xl bg-rose-50 text-rose-700 border border-rose-100">
+                      <ArrowDownRight className="w-4 h-4" />
+                    </div>
                   </div>
-                </div>
-              </MagicCard>
+                  <div className="mt-4">
+                    <p className="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight font-mono-numbers">
+                      {currencySymbol}
+                      {(metrics.totalDebit * currencyMultiplier).toLocaleString(undefined, {
+                        maximumFractionDigits: 2,
+                      })}
+                    </p>
+                    <div className="flex items-center gap-2 mt-2">
+                      <span className="text-[11px] font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded-md border border-rose-100">
+                        Burn Rate
+                      </span>
+                      <span className="text-[11px] text-slate-500 font-medium">
+                        {adata.filter((d) => d.type?.toLowerCase() === "debit").length} expenses
+                      </span>
+                    </div>
+                  </div>
+                </MagicCard>
+              </motion.div>
 
               {/* Net Balance */}
-              <MagicCard>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                    Net Operating Balance
-                  </span>
-                  <div className="p-2 rounded-xl bg-indigo-50 text-indigo-700 border border-indigo-100">
-                    <Wallet className="w-4 h-4" />
-                  </div>
-                </div>
-                <div className="mt-4">
-                  <p
-                    className={`text-2xl lg:text-3xl font-extrabold tracking-tight font-mono-numbers ${
-                      metrics.netBalance >= 0 ? "text-emerald-600" : "text-rose-600"
-                    }`}
-                  >
-                    {currencySymbol}
-                    {(metrics.netBalance * currencyMultiplier).toLocaleString(undefined, {
-                      maximumFractionDigits: 2,
-                    })}
-                  </p>
-                  <div className="flex items-center gap-2 mt-2">
-                    <span className="text-[11px] font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-md border border-indigo-100">
-                      Margin: {metrics.profitMargin}%
+              <motion.div
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.24, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ y: -3, transition: { duration: 0.2 } }}
+              >
+                <MagicCard>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                      Net Operating Balance
                     </span>
-                    <span className="text-[11px] text-slate-500 font-medium">
-                      {metrics.netBalance >= 0 ? "Profitable" : "Deficit Alert"}
-                    </span>
+                    <div className="p-2 rounded-xl bg-indigo-50 text-indigo-700 border border-indigo-100">
+                      <Wallet className="w-4 h-4" />
+                    </div>
                   </div>
-                </div>
-              </MagicCard>
+                  <div className="mt-4">
+                    <p
+                      className={`text-2xl lg:text-3xl font-extrabold tracking-tight font-mono-numbers ${
+                        metrics.netBalance >= 0 ? "text-emerald-600" : "text-rose-600"
+                      }`}
+                    >
+                      {currencySymbol}
+                      {(metrics.netBalance * currencyMultiplier).toLocaleString(undefined, {
+                        maximumFractionDigits: 2,
+                      })}
+                    </p>
+                    <div className="flex items-center gap-2 mt-2">
+                      <span className="text-[11px] font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-md border border-indigo-100">
+                        Margin: {metrics.profitMargin}%
+                      </span>
+                      <span className="text-[11px] text-slate-500 font-medium">
+                        {metrics.netBalance >= 0 ? "Profitable" : "Deficit Alert"}
+                      </span>
+                    </div>
+                  </div>
+                </MagicCard>
+              </motion.div>
 
               {/* Total Volume */}
-              <MagicCard>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                    Total Volume
-                  </span>
-                  <div className="p-2 rounded-xl bg-slate-100 text-slate-700 border border-slate-200/80">
-                    <Receipt className="w-4 h-4" />
-                  </div>
-                </div>
-                <div className="mt-4">
-                  <p className="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight font-mono-numbers">
-                    {currencySymbol}
-                    {(metrics.totalVolume * currencyMultiplier).toLocaleString(undefined, {
-                      maximumFractionDigits: 2,
-                    })}
-                  </p>
-                  <div className="flex items-center gap-2 mt-2">
-                    <span className="text-[11px] font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200/80">
-                      {metrics.count} Entries
+              <motion.div
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.32, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ y: -3, transition: { duration: 0.2 } }}
+              >
+                <MagicCard>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                      Total Volume
                     </span>
-                    <span className="text-[11px] text-slate-500 font-medium">Reconciled</span>
+                    <div className="p-2 rounded-xl bg-slate-100 text-slate-700 border border-slate-200/80">
+                      <Receipt className="w-4 h-4" />
+                    </div>
                   </div>
-                </div>
-              </MagicCard>
+                  <div className="mt-4">
+                    <p className="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight font-mono-numbers">
+                      {currencySymbol}
+                      {(metrics.totalVolume * currencyMultiplier).toLocaleString(undefined, {
+                        maximumFractionDigits: 2,
+                      })}
+                    </p>
+                    <div className="flex items-center gap-2 mt-2">
+                      <span className="text-[11px] font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200/80">
+                        {metrics.count} Entries
+                      </span>
+                      <span className="text-[11px] text-slate-500 font-medium">Reconciled</span>
+                    </div>
+                  </div>
+                </MagicCard>
+              </motion.div>
             </>
           )}
         </section>
 
         {/* Velocity & Capital Health Chart */}
-        <section>
+        <motion.section
+          initial={{ opacity: 0, y: 22 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.38, ease: [0.16, 1, 0.3, 1] }}
+        >
           <CashflowChart
             tracks={adata}
             currencySymbol={currencySymbol}
             currencyMultiplier={currencyMultiplier}
           />
-        </section>
+        </motion.section>
 
         {/* Ledger Data Table Section */}
-        <section className="rounded-2xl border border-slate-200/90 bg-white/90 backdrop-blur-md shadow-xs overflow-hidden">
+        <motion.section
+          initial={{ opacity: 0, y: 22 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.46, ease: [0.16, 1, 0.3, 1] }}
+          className="rounded-2xl border border-slate-200/90 bg-white/90 backdrop-blur-md shadow-xs overflow-hidden"
+        >
           {/* Table Controls Bar */}
           <div className="p-5 border-b border-slate-100 flex flex-col md:flex-row items-center justify-between gap-4">
             {/* Search Input */}
@@ -992,7 +1039,7 @@ function App() {
               </button>
             </div>
           </div>
-        </section>
+        </motion.section>
 
         {/* Add / Edit Transaction Modal */}
         <TransactionModal

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { motion } from "motion/react";
 import {
   X,
   ArrowUpRight,
@@ -65,13 +66,23 @@ export function TransactionModal({
   const numericAmount = Number(formData.amount) || 0;
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-xs animate-in fade-in duration-150"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm"
     >
-      <div className="relative w-full max-w-lg rounded-2xl border border-slate-200/90 bg-white p-7 shadow-2xl text-slate-900 animate-in zoom-in-95 duration-150 overflow-hidden">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95, y: 15 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.95, y: 15 }}
+        transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+        className="relative w-full max-w-lg rounded-2xl border border-slate-200/90 bg-white p-7 shadow-2xl text-slate-900 overflow-hidden"
+      >
         {/* Header */}
         <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-6">
           <div className="flex items-center gap-3">
@@ -296,8 +307,8 @@ export function TransactionModal({
             </button>
           </div>
         </form>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
 

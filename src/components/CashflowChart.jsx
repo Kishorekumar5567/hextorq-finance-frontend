@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { motion } from "motion/react";
 import { ArrowUpRight, ArrowDownRight } from "lucide-react";
 
 export function CashflowChart({ tracks = [], currencySymbol = "₹", currencyMultiplier = 1 }) {
@@ -96,13 +97,17 @@ export function CashflowChart({ tracks = [], currencySymbol = "₹", currencyMul
             </div>
 
             <div className="h-3 w-full rounded-full bg-slate-100 overflow-hidden flex border border-slate-200/60 shadow-inner">
-              <div
-                style={{ width: `${creditPercent}%` }}
-                className="h-full bg-emerald-500 transition-all duration-700"
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: `${creditPercent}%` }}
+                transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+                className="h-full bg-emerald-500"
               />
-              <div
-                style={{ width: `${debitPercent}%` }}
-                className="h-full bg-rose-500 transition-all duration-700"
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: `${debitPercent}%` }}
+                transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+                className="h-full bg-rose-500"
               />
             </div>
           </div>
@@ -156,7 +161,7 @@ export function CashflowChart({ tracks = [], currencySymbol = "₹", currencyMul
         <div className="space-y-4">
           <div className="h-44 w-full flex items-end justify-between gap-3 pt-4 px-2">
             {sortedDates.length > 0 ? (
-              sortedDates.map((date) => {
+              sortedDates.map((date, idx) => {
                 const day = dateMap[date];
                 const creditHeight = Math.max(
                   Math.round((day.credit / maxDayVal) * 110),
@@ -173,14 +178,20 @@ export function CashflowChart({ tracks = [], currencySymbol = "₹", currencyMul
                     className="flex-1 flex flex-col items-center gap-1.5 h-full justify-end group"
                   >
                     <div className="flex items-end gap-1.5 w-full justify-center">
-                      <div
-                        style={{ height: `${creditHeight}px` }}
-                        className="w-3 rounded-t-sm bg-emerald-500 hover:bg-emerald-600 transition-all shadow-xs"
+                      <motion.div
+                        initial={{ scaleY: 0 }}
+                        animate={{ scaleY: 1 }}
+                        transition={{ duration: 0.6, delay: idx * 0.04, ease: [0.16, 1, 0.3, 1] }}
+                        style={{ height: `${creditHeight}px`, originY: 1 }}
+                        className="w-3 rounded-t-sm bg-emerald-500 hover:bg-emerald-600 transition-colors shadow-xs"
                         title={`Inflow: ${currencySymbol}${(day.credit * currencyMultiplier).toLocaleString()}`}
                       />
-                      <div
-                        style={{ height: `${debitHeight}px` }}
-                        className="w-3 rounded-t-sm bg-rose-500 hover:bg-rose-600 transition-all shadow-xs"
+                      <motion.div
+                        initial={{ scaleY: 0 }}
+                        animate={{ scaleY: 1 }}
+                        transition={{ duration: 0.6, delay: idx * 0.04 + 0.02, ease: [0.16, 1, 0.3, 1] }}
+                        style={{ height: `${debitHeight}px`, originY: 1 }}
+                        className="w-3 rounded-t-sm bg-rose-500 hover:bg-rose-600 transition-colors shadow-xs"
                         title={`Outflow: ${currencySymbol}${(day.debit * currencyMultiplier).toLocaleString()}`}
                       />
                     </div>

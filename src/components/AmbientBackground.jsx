@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import HexagonPattern from "./HexagonPattern";
+import CinematicAurora from "./CinematicAurora";
+import Particles from "./Particles";
 
 export function AmbientBackground() {
-  const [mousePos, setMousePos] = useState({ x: 50, y: 30 });
+  const [mousePos, setMousePos] = useState({ x: 50, y: 35 });
 
   useEffect(() => {
     const handleMouseMove = (e) => {
-      // Calculate normalized mouse percentages (0 to 100)
       const x = Math.round((e.clientX / window.innerWidth) * 100);
       const y = Math.round((e.clientY / window.innerHeight) * 100);
       setMousePos({ x, y });
@@ -19,42 +20,33 @@ export function AmbientBackground() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 z-0 overflow-hidden select-none"
+      className="pointer-events-none fixed inset-0 z-0 overflow-hidden select-none bg-[#f8fafc]"
     >
-      {/* Dynamic Animated Floating Light Orbs */}
-      <div className="absolute inset-0">
-        {/* Orb 1: Soft Emerald Inflow Glow (top-left) */}
-        <div
-          className="absolute -top-24 -left-24 h-96 w-96 rounded-full bg-emerald-300/25 blur-3xl transition-transform duration-1000 ease-out animate-pulse"
-          style={{
-            transform: `translate(${mousePos.x * 0.15}px, ${mousePos.y * 0.15}px)`,
-            animationDuration: "8s",
-          }}
-        />
+      {/* 1. Volumetric Flowing Aurora Waves */}
+      <CinematicAurora />
 
-        {/* Orb 2: Indigo Treasury Glow (top-right) */}
-        <div
-          className="absolute top-12 right-0 h-[28rem] w-[28rem] rounded-full bg-indigo-200/30 blur-3xl transition-transform duration-1000 ease-out animate-pulse"
-          style={{
-            transform: `translate(${-mousePos.x * 0.2}px, ${mousePos.y * 0.1}px)`,
-            animationDuration: "10s",
-          }}
-        />
+      {/* 2. Interactive Magnetic Canvas Particles */}
+      <Particles
+        quantity={50}
+        color="#059669"
+        size={0.9}
+        staticity={35}
+        ease={40}
+        className="opacity-60"
+      />
+      <Particles
+        quantity={35}
+        color="#6366f1"
+        size={1.1}
+        staticity={45}
+        ease={50}
+        className="opacity-50"
+      />
 
-        {/* Orb 3: Cyan/Sky Velocity Pulse (center) */}
-        <div
-          className="absolute top-1/2 left-1/3 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-sky-200/20 blur-3xl transition-transform duration-1000 ease-out animate-pulse"
-          style={{
-            transform: `translate(${mousePos.x * 0.1}px, ${-mousePos.y * 0.15}px)`,
-            animationDuration: "12s",
-          }}
-        />
-      </div>
-
-      {/* HexTorq Hexagonal Pattern Layer with Radial Vignette */}
+      {/* 3. HexTorq Branded Geometric Hexagon Lattice with Radial Vignette */}
       <div className="absolute inset-0 [mask-image:radial-gradient(ellipse_75%_65%_at_50%_35%,#000_25%,transparent_90%)]">
         <HexagonPattern
-          radius={32}
+          radius={34}
           gap={3}
           strokeDasharray="4 2"
           className="stroke-slate-300/35 fill-slate-200/10"
@@ -66,20 +58,22 @@ export function AmbientBackground() {
             [14, 5],
             [2, 6],
             [10, 7],
+            [6, 8],
           ]}
         />
       </div>
 
-      {/* Mouse Follow Interactive Spotlight */}
+      {/* 4. Mouse Interactive Specular Spotlight */}
       <div
-        className="absolute inset-0 transition-opacity duration-500"
+        className="absolute inset-0 transition-opacity duration-700"
         style={{
-          background: `radial-gradient(600px circle at ${mousePos.x}% ${mousePos.y}%, rgba(241, 245, 249, 0.45), transparent 80%)`,
+          background: `radial-gradient(650px circle at ${mousePos.x}% ${mousePos.y}%, rgba(255, 255, 255, 0.45), transparent 85%)`,
         }}
       />
 
-      {/* Subtle Bottom Ambient Gradient */}
-      <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-[#f8fafc] to-transparent" />
+      {/* 5. Edge Vignette & Grounding Gradient */}
+      <div className="absolute bottom-0 inset-x-0 h-44 bg-gradient-to-t from-[#f8fafc] via-[#f8fafc]/80 to-transparent" />
+      <div className="absolute top-0 inset-x-0 h-28 bg-gradient-to-b from-[#f8fafc]/60 to-transparent" />
     </div>
   );
 }
