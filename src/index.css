@@ -8,28 +8,28 @@
 
   body {
     font-family: var(--font-sans);
-    background-color: #030712;
-    color: #f3f4f6;
+    background-color: #f8fafc;
+    color: #0f172a;
   }
 }
 
-/* Custom Sleek Scrollbar */
+/* Custom Sleek Light Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.6);
+  background: #f1f5f9;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(51, 65, 85, 0.7);
+  background: #cbd5e1;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(100, 116, 139, 0.9);
+  background: #94a3b8;
 }
 
 /* Tabular figures for monetary values */
@@ -38,16 +38,14 @@
   font-feature-settings: "tnum" 1, "cv01" 1;
 }
 
-/* Glassmorphism helpers */
-.glass-panel {
-  background: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(51, 65, 85, 0.5);
+/* Card hover transitions */
+.saas-card {
+  background-color: #ffffff;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.03), 0 1px 2px -1px rgba(0, 0, 0, 0.02);
 }
 
-.glass-dropdown {
-  background: rgba(10, 15, 29, 0.95);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(51, 65, 85, 0.7);
+.saas-card:hover {
+  border-color: rgba(203, 213, 225, 1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.03);
 }

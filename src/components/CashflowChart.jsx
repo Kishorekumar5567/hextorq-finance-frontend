@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { TrendingUp, ArrowUpRight, ArrowDownRight, Layers } from "lucide-react";
+import { ArrowUpRight, ArrowDownRight } from "lucide-react";
 
-export function CashflowChart({ tracks = [] }) {
+export function CashflowChart({ tracks = [], currencySymbol = "₹", currencyMultiplier = 1 }) {
   const [activeView, setActiveView] = useState("ratio");
 
   const totalCredit = tracks
@@ -18,7 +18,7 @@ export function CashflowChart({ tracks = [] }) {
   const netSavings = totalCredit - totalDebit;
   const marginPercent = totalCredit > 0 ? Math.round((netSavings / totalCredit) * 100) : 0;
 
-  // Group by date for mini visual sparkline
+  // Group by date for sparkline
   const dateMap = {};
   tracks.forEach((t) => {
     if (!t.date) return;
@@ -40,39 +40,39 @@ export function CashflowChart({ tracks = [] }) {
   );
 
   return (
-    <div className="rounded-2xl border border-slate-800 bg-slate-900/90 p-6 backdrop-blur-xl shadow-xl">
+    <div className="rounded-2xl border border-slate-200/90 bg-white p-6 shadow-[0_1px_3px_0_rgba(0,0,0,0.03),0_1px_2px_-1px_rgba(0,0,0,0.02)]">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
         <div>
           <div className="flex items-center gap-2">
-            <span className="flex h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse" />
-            <h3 className="text-base font-semibold text-slate-100 tracking-wide">
-              Financial Health & Cashflow Velocity
+            <span className="flex h-2 w-2 rounded-full bg-emerald-500" />
+            <h3 className="text-sm font-bold text-slate-900 tracking-tight">
+              Cashflow Velocity & Health Ratio
             </h3>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
-            Real-time ratio analysis across revenue and operational expenditures
+          <p className="text-xs text-slate-500 mt-0.5">
+            Real-time balance allocation between revenue inflows and operational costs
           </p>
         </div>
 
-        <div className="flex items-center gap-1.5 rounded-xl bg-slate-800/80 p-1 border border-slate-700/60 text-xs">
+        <div className="flex items-center gap-1 rounded-xl bg-slate-100 p-1 border border-slate-200/80 text-xs">
           <button
             type="button"
             onClick={() => setActiveView("ratio")}
-            className={`px-3 py-1.5 rounded-lg font-medium transition cursor-pointer ${
+            className={`px-3 py-1.5 rounded-lg font-semibold transition cursor-pointer ${
               activeView === "ratio"
-                ? "bg-blue-600 text-white shadow-sm"
-                : "text-slate-400 hover:text-slate-200"
+                ? "bg-white text-slate-900 shadow-xs"
+                : "text-slate-600 hover:text-slate-900"
             }`}
           >
-            Allocation Ratio
+            Capital Allocation
           </button>
           <button
             type="button"
             onClick={() => setActiveView("trend")}
-            className={`px-3 py-1.5 rounded-lg font-medium transition cursor-pointer ${
+            className={`px-3 py-1.5 rounded-lg font-semibold transition cursor-pointer ${
               activeView === "trend"
-                ? "bg-blue-600 text-white shadow-sm"
-                : "text-slate-400 hover:text-slate-200"
+                ? "bg-white text-slate-900 shadow-xs"
+                : "text-slate-600 hover:text-slate-900"
             }`}
           >
             Activity Pulse
@@ -85,72 +85,76 @@ export function CashflowChart({ tracks = [] }) {
           {/* Ratio bar */}
           <div>
             <div className="flex justify-between items-center text-xs font-semibold mb-2">
-              <span className="flex items-center gap-1.5 text-emerald-400">
+              <span className="flex items-center gap-1.5 text-emerald-700">
                 <ArrowUpRight className="w-3.5 h-3.5" />
-                Revenue: {creditPercent}% (₹{totalCredit.toLocaleString()})
+                Revenue: {creditPercent}% ({currencySymbol}{(totalCredit * currencyMultiplier).toLocaleString()})
               </span>
-              <span className="flex items-center gap-1.5 text-rose-400">
+              <span className="flex items-center gap-1.5 text-rose-700">
                 <ArrowDownRight className="w-3.5 h-3.5" />
-                Expense: {debitPercent}% (₹{totalDebit.toLocaleString()})
+                Expenses: {debitPercent}% ({currencySymbol}{(totalDebit * currencyMultiplier).toLocaleString()})
               </span>
             </div>
 
-            <div className="h-3.5 w-full rounded-full bg-slate-800 overflow-hidden flex shadow-inner">
+            <div className="h-3 w-full rounded-full bg-slate-100 overflow-hidden flex border border-slate-200/60 shadow-inner">
               <div
                 style={{ width: `${creditPercent}%` }}
-                className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all duration-700"
+                className="h-full bg-emerald-500 transition-all duration-700"
               />
               <div
                 style={{ width: `${debitPercent}%` }}
-                className="h-full bg-gradient-to-r from-rose-500 to-amber-500 transition-all duration-700"
+                className="h-full bg-rose-500 transition-all duration-700"
               />
             </div>
           </div>
 
-          {/* Quick Metrics Cards Inside Chart */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
-            <div className="rounded-xl border border-slate-800/80 bg-slate-950/50 p-3.5">
-              <p className="text-[11px] font-medium text-slate-400 uppercase tracking-wider">
+          {/* KPI Mini-cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+            <div className="rounded-xl border border-slate-200/70 bg-slate-50/60 p-3.5">
+              <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
                 Operating Margin
               </p>
               <div className="flex items-baseline gap-2 mt-1">
-                <span className="text-xl font-bold text-slate-100">
+                <span className="text-xl font-extrabold text-slate-900 font-mono-numbers">
                   {marginPercent}%
                 </span>
-                <span className="text-xs text-emerald-400 font-semibold">
-                  {marginPercent >= 20 ? "Optimal" : "Standard"}
+                <span
+                  className={`text-xs font-bold ${
+                    marginPercent >= 20 ? "text-emerald-600" : "text-amber-600"
+                  }`}
+                >
+                  {marginPercent >= 20 ? "Positive Cashflow" : "Tight Margin"}
                 </span>
               </div>
             </div>
 
-            <div className="rounded-xl border border-slate-800/80 bg-slate-950/50 p-3.5">
-              <p className="text-[11px] font-medium text-slate-400 uppercase tracking-wider">
-                Total Volume Tracked
+            <div className="rounded-xl border border-slate-200/70 bg-slate-50/60 p-3.5">
+              <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+                Total Capital Handled
               </p>
               <div className="flex items-baseline gap-2 mt-1">
-                <span className="text-xl font-bold text-slate-100">
-                  ₹{totalVolume.toLocaleString()}
+                <span className="text-xl font-extrabold text-slate-900 font-mono-numbers">
+                  {currencySymbol}{(totalVolume * currencyMultiplier).toLocaleString()}
                 </span>
               </div>
             </div>
 
-            <div className="rounded-xl border border-slate-800/80 bg-slate-950/50 p-3.5">
-              <p className="text-[11px] font-medium text-slate-400 uppercase tracking-wider">
-                Transaction Count
+            <div className="rounded-xl border border-slate-200/70 bg-slate-50/60 p-3.5">
+              <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+                Ledger Entries
               </p>
               <div className="flex items-baseline gap-2 mt-1">
-                <span className="text-xl font-bold text-slate-100">
+                <span className="text-xl font-extrabold text-slate-900 font-mono-numbers">
                   {tracks.length}
                 </span>
-                <span className="text-xs text-blue-400">Total Entries</span>
+                <span className="text-xs text-slate-500 font-medium">Reconciled</span>
               </div>
             </div>
           </div>
         </div>
       ) : (
-        /* Trend bars view */
+        /* Trend Activity Pulse */
         <div className="space-y-4">
-          <div className="h-44 w-full flex items-end justify-between gap-3 pt-6 px-2">
+          <div className="h-44 w-full flex items-end justify-between gap-3 pt-4 px-2">
             {sortedDates.length > 0 ? (
               sortedDates.map((date) => {
                 const day = dateMap[date];
@@ -168,36 +172,36 @@ export function CashflowChart({ tracks = [] }) {
                     key={date}
                     className="flex-1 flex flex-col items-center gap-1.5 h-full justify-end group"
                   >
-                    <div className="flex items-end gap-1 w-full justify-center">
+                    <div className="flex items-end gap-1.5 w-full justify-center">
                       <div
                         style={{ height: `${creditHeight}px` }}
-                        className="w-3 rounded-t-sm bg-emerald-500/80 group-hover:bg-emerald-400 transition-all shadow-sm"
-                        title={`Credit: ₹${day.credit.toLocaleString()}`}
+                        className="w-3 rounded-t-sm bg-emerald-500 hover:bg-emerald-600 transition-all shadow-xs"
+                        title={`Inflow: ${currencySymbol}${(day.credit * currencyMultiplier).toLocaleString()}`}
                       />
                       <div
                         style={{ height: `${debitHeight}px` }}
-                        className="w-3 rounded-t-sm bg-rose-500/80 group-hover:bg-rose-400 transition-all shadow-sm"
-                        title={`Debit: ₹${day.debit.toLocaleString()}`}
+                        className="w-3 rounded-t-sm bg-rose-500 hover:bg-rose-600 transition-all shadow-xs"
+                        title={`Outflow: ${currencySymbol}${(day.debit * currencyMultiplier).toLocaleString()}`}
                       />
                     </div>
-                    <span className="text-[10px] text-slate-500 group-hover:text-slate-300 whitespace-nowrap">
+                    <span className="text-[11px] text-slate-500 font-medium group-hover:text-slate-800 whitespace-nowrap">
                       {date.slice(5)}
                     </span>
                   </div>
                 );
               })
             ) : (
-              <div className="w-full text-center text-slate-500 text-sm py-12">
-                No chronological data available.
+              <div className="w-full text-center text-slate-400 text-xs py-12">
+                No chronologically indexed data available.
               </div>
             )}
           </div>
-          <div className="flex items-center justify-center gap-6 text-xs text-slate-400 pt-2 border-t border-slate-800">
-            <span className="flex items-center gap-2">
+          <div className="flex items-center justify-center gap-6 text-xs text-slate-600 pt-3 border-t border-slate-100 font-medium">
+            <span className="flex items-center gap-1.5">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
               Inflow (Credit)
             </span>
-            <span className="flex items-center gap-2">
+            <span className="flex items-center gap-1.5">
               <span className="w-2.5 h-2.5 rounded-full bg-rose-500" />
               Outflow (Debit)
             </span>
