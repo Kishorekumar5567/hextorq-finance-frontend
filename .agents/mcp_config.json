@@ -21,6 +21,10 @@
       "headers": {
         "x-api-key": "$API_KEY_21ST"
       }
+    },
+    "context7": {
+      "url": "https://mcp.context7.com/mcp",
+      "serverUrl": "https://mcp.context7.com/mcp"
     }
   }
 }
