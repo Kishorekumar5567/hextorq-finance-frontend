@@ -23,12 +23,11 @@ import {
   X,
   SlidersHorizontal,
 } from "lucide-react";
+import MagicCard from "./components/MagicCard";
 import CashflowChart from "./components/CashflowChart";
 import TransactionModal from "./components/TransactionModal";
 import Toast from "./components/Toast";
 import AmbientBackground from "./components/AmbientBackground";
-import Card3D from "./components/Card3D";
-import HexTorq3DVisual from "./components/HexTorq3DVisual";
 import { StatCardSkeleton, TableRowSkeleton } from "./components/Skeletons";
 import { motion } from "motion/react";
 
@@ -381,10 +380,6 @@ function App() {
                 <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 border border-slate-200/80">
                   Finance OS
                 </span>
-                <span className="hidden sm:inline-flex items-center gap-1.5 text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200/80 shadow-2xs">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  3D Cinematic
-                </span>
               </div>
               <p className="text-[11px] text-slate-500 font-medium flex items-center gap-2">
                 <span>Revenue & Cost Ledger</span>
@@ -486,13 +481,14 @@ function App() {
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ y: -3, transition: { duration: 0.2 } }}
               >
-                <Card3D className="p-6 h-full">
+                <MagicCard>
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
                       Gross Revenue
                     </span>
-                    <div className="p-2 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-100 shadow-2xs">
+                    <div className="p-2 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-100">
                       <ArrowUpRight className="w-4 h-4" />
                     </div>
                   </div>
@@ -512,7 +508,7 @@ function App() {
                       </span>
                     </div>
                   </div>
-                </Card3D>
+                </MagicCard>
               </motion.div>
 
               {/* Operating Cost */}
@@ -520,13 +516,14 @@ function App() {
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ y: -3, transition: { duration: 0.2 } }}
               >
-                <Card3D className="p-6 h-full">
+                <MagicCard>
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
                       Operating Cost
                     </span>
-                    <div className="p-2 rounded-xl bg-rose-50 text-rose-700 border border-rose-100 shadow-2xs">
+                    <div className="p-2 rounded-xl bg-rose-50 text-rose-700 border border-rose-100">
                       <ArrowDownRight className="w-4 h-4" />
                     </div>
                   </div>
@@ -546,31 +543,23 @@ function App() {
                       </span>
                     </div>
                   </div>
-                </Card3D>
+                </MagicCard>
               </motion.div>
 
-              {/* Net Balance (Featuring Interactive 3D HexTorq Polyhedron) */}
+              {/* Net Balance */}
               <motion.div
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.24, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ y: -3, transition: { duration: 0.2 } }}
               >
-                <Card3D className="p-6 h-full border-emerald-200/60 shadow-[0_4px_20px_-4px_rgba(16,185,129,0.12)]">
+                <MagicCard>
                   <div className="flex items-center justify-between">
-                    <div>
-                      <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                        Net Operating Balance
-                      </span>
-                      <div className="flex items-center gap-1.5 mt-0.5">
-                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                        <span className="text-[10px] font-semibold text-slate-400">Live 3D Treasury</span>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <HexTorq3DVisual size={38} />
-                      <div className="p-2 rounded-xl bg-indigo-50 text-indigo-700 border border-indigo-100 shadow-2xs">
-                        <Wallet className="w-4 h-4" />
-                      </div>
+                    <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                      Net Operating Balance
+                    </span>
+                    <div className="p-2 rounded-xl bg-indigo-50 text-indigo-700 border border-indigo-100">
+                      <Wallet className="w-4 h-4" />
                     </div>
                   </div>
                   <div className="mt-4">
@@ -593,7 +582,7 @@ function App() {
                       </span>
                     </div>
                   </div>
-                </Card3D>
+                </MagicCard>
               </motion.div>
 
               {/* Total Volume */}
@@ -601,13 +590,14 @@ function App() {
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.32, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ y: -3, transition: { duration: 0.2 } }}
               >
-                <Card3D className="p-6 h-full">
+                <MagicCard>
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
                       Total Volume
                     </span>
-                    <div className="p-2 rounded-xl bg-slate-100 text-slate-700 border border-slate-200/80 shadow-2xs">
+                    <div className="p-2 rounded-xl bg-slate-100 text-slate-700 border border-slate-200/80">
                       <Receipt className="w-4 h-4" />
                     </div>
                   </div>
@@ -625,7 +615,7 @@ function App() {
                       <span className="text-[11px] text-slate-500 font-medium">Reconciled</span>
                     </div>
                   </div>
-                </Card3D>
+                </MagicCard>
               </motion.div>
             </>
           )}
