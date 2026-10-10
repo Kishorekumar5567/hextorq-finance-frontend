@@ -40,7 +40,7 @@ export function CashflowChart({ tracks = [], currencySymbol = "₹", currencyMul
   );
 
   return (
-    <div className="rounded-2xl border border-slate-200/90 bg-white p-6 shadow-[0_1px_3px_0_rgba(0,0,0,0.03),0_1px_2px_-1px_rgba(0,0,0,0.02)]">
+    <div className="rounded-2xl border border-slate-200/90 bg-white/90 backdrop-blur-md p-6 shadow-[0_1px_3px_0_rgba(0,0,0,0.03),0_1px_2px_-1px_rgba(0,0,0,0.02)]">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
         <div>
           <div className="flex items-center gap-2">
