@@ -9,6 +9,11 @@
     },
     "orshot": {
       "serverUrl": "https://mcp.orshot.com/mcp"
+    },
+    "ui9000": {
+      "transport": "sse",
+      "url": "https://mcp.ui9000.com/see",
+      "serverUrl": "https://mcp.ui9000.com/see"
     }
   }
 }
