@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import HexagonPattern from "./HexagonPattern";
 import CinematicAurora from "./CinematicAurora";
-import Particles from "./Particles";
+import Floating3DParticles from "./Floating3DParticles";
 
 export function AmbientBackground() {
   const [mousePos, setMousePos] = useState({ x: 50, y: 35 });
@@ -25,22 +25,24 @@ export function AmbientBackground() {
       {/* 1. Volumetric Flowing Aurora Waves */}
       <CinematicAurora />
 
-      {/* 2. Interactive Magnetic Canvas Particles */}
-      <Particles
-        quantity={50}
-        color="#059669"
-        size={0.9}
-        staticity={35}
-        ease={40}
-        className="opacity-60"
+      {/* 2. Floating 3D Perspective Particle Field */}
+      <Floating3DParticles
+        quantity={120}
+        color="#10B981"
+        size={3.5}
+        opacity={0.22}
+        drift={0.35}
+        depth={0.65}
+        className="opacity-70"
       />
-      <Particles
-        quantity={35}
-        color="#6366f1"
-        size={1.1}
-        staticity={45}
-        ease={50}
-        className="opacity-50"
+      <Floating3DParticles
+        quantity={80}
+        color="#6366F1"
+        size={4.2}
+        opacity={0.18}
+        drift={0.4}
+        depth={0.75}
+        className="opacity-60"
       />
 
       {/* 3. HexTorq Branded Geometric Hexagon Lattice with Radial Vignette */}
