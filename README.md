@@ -1,46 +1,16 @@
-# hextorq-finance-frontend
+# React + Vite
 
-Frontend web application for the Revenue & Cost Tracker built with React 19, Vite, and Tailwind CSS.
+This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 
-## 🚀 Features
-- **Transaction Overview**: Real-time tracking of revenue (Credit) and expenses (Debit).
-- **Dynamic Aggregate Totals**: Automatic live calculations for Total Credit, Total Debit, and Net Balance.
-- **Interactive Data Entry**: Modal form supporting Add and Edit operations with field validation.
-- **Instant Search & Filter**: Real-time filter across descriptions, transaction types, remarks, and dates.
-- **Production-Ready**: Configured for local development and instant deployment to Vercel.
+Currently, two official plugins are available:
 
-## 🛠️ Getting Started
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-### 1. Install Dependencies
-```bash
-npm install
-```
+## React Compiler
 
-### 2. Configure Environment Variables
-Copy `.env.example` to `.env`:
-```bash
-cp .env.example .env
-```
-Set `VITE_API_URL` to your backend URL:
-```env
-# Local backend
-VITE_API_URL=http://localhost:8000
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-# Or production backend
-# VITE_API_URL=https://hextorq-finance-backend.onrender.com
-```
+## Expanding the Oxlint configuration
 
-### 3. Run Development Server
-```bash
-npm run dev
-```
-
-### 4. Build for Production
-```bash
-npm run build
-```
-
-## 🌐 Deploy to Vercel
-1. Import this repository into Vercel.
-2. Set Environment Variable `VITE_API_URL` to your deployed backend URL.
-3. Deploy!
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
